@@ -23,3 +23,10 @@ modulizer \
 
   # --add-import-meta=false ? doesn't seem to work asks for git token
 
+# yarn add --dev polymer-cli polymer-bundler polymer-build polymer-analyzer
+
+# Find something for neon-animation/web-animations.js, polyfill ?
+
+# to fix build after modulizer ran:
+# more-info-input_datetime -> comment out paper-time-input import
+# home-assistant.js -> comment out neon-animation/web-animations.js import
