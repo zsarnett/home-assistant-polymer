@@ -1,5 +1,25 @@
 rm -rf hass_frontend* build*
 
-modulizer --npm-name home-assistant-frontend --npm-version 1.0 --clean --import-style name --package-type application
-# --add-import-meta=false ? doesn't seem to work asks for git token
+modulizer \
+  --npm-name home-assistant-frontend \
+  --npm-version 1.0 \
+  --import-style name \
+  --package-type application \
+  --dependency-mapping fecha,fecha,^2.3.3 \
+  --dependency-mapping leaflet,leaflet,^1.0.2 \
+  --dependency-mapping moment,moment,^2.20.0 \
+  --dependency-mapping chart.js,chart.js,~2.7.2 \
+  --dependency-mapping vaadin-date-picker,@vaadin/vaadin-date-picker,3.0.0-pre.3 \
+  --dependency-mapping vaadin-themable-mixin,vaadin-themable-mixin,1.2.0 \
+  --dependency-mapping vaadin-text-field,@vaadin/vaadin-text-field,2.0.1-pre.2 \
+  --dependency-mapping vaadin-control-state-mixin,@vaadin/vaadin-control-state-mixin,2.0.3-pre.3 \
+  --dependency-mapping vaadin-button,@vaadin/vaadin-button,2.0.0-pre.2 \
+  --dependency-mapping vaadin-combo-box,@vaadin/vaadin-combo-box,4.0.1-pre.1 \
+  --dependency-mapping vaadin-overlay,@vaadin/vaadin-overlay,3.0.2-pre.1 \
+
+  # Needs to be published to npm
+  # --dependency-mapping paper-time-input,, \
+  # --dependency-mapping chartjs-chart-timeline,, \
+
+  # --add-import-meta=false ? doesn't seem to work asks for git token
 
