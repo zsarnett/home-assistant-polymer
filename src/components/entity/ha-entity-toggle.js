@@ -1,7 +1,7 @@
 import '@polymer/paper-icon-button/paper-icon-button.js';
-import '@polymer/paper-toggle-button/paper-toggle-button.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import '@material/mwc-switch';
 
 import { STATES_OFF } from '../../common/const.js';
 import computeStateDomain from '../../common/entity/compute_state_domain.js';
@@ -21,11 +21,10 @@ class HaEntityToggle extends PolymerElement {
       paper-icon-button[state-active] {
         color: var(--paper-icon-button-active-color, var(--primary-color));
       }
-      paper-toggle-button {
-        cursor: pointer;
-        --paper-toggle-button-label-spacing: 0;
-        padding: 13px 5px;
-        margin: -4px -5px;
+      mwc-switch {
+        display: inline-block;
+        padding: 17px 5px 13px;
+        margin: -4px -5px -8px;
       }
     </style>
 
@@ -34,7 +33,7 @@ class HaEntityToggle extends PolymerElement {
       <paper-icon-button icon="hass:flash" on-click="turnOn" state-active$="[[isOn]]"></paper-icon-button>
     </template>
     <template is="dom-if" if="[[!stateObj.attributes.assumed_state]]">
-      <paper-toggle-button checked="[[toggleChecked]]" on-change="toggleChanged"></paper-toggle-button>
+      <mwc-switch checked="[[toggleChecked]]" on-change="toggleChanged"></mwc-switch>
     </template>
 `;
   }
