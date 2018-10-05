@@ -1,4 +1,4 @@
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { PolymerElement } from "@polymer/polymer/polymer-element.js";
 
 var DATE_CACHE = {};
 
@@ -7,12 +7,12 @@ class HaLogbookData extends PolymerElement {
     return {
       hass: {
         type: Object,
-        observer: 'hassChanged',
+        observer: "hassChanged",
       },
 
       filterDate: {
         type: String,
-        observer: 'filterDateChanged',
+        observer: "filterDateChanged",
       },
 
       isLoading: {
@@ -42,20 +42,22 @@ class HaLogbookData extends PolymerElement {
 
     this._setIsLoading(true);
 
-    this.getDate(filterDate).then(function (logbookEntries) {
-      this._setEntries(logbookEntries);
-      this._setIsLoading(false);
-    }.bind(this));
+    this.getDate(filterDate).then(
+      function(logbookEntries) {
+        this._setEntries(logbookEntries);
+        this._setIsLoading(false);
+      }.bind(this)
+    );
   }
 
   getDate(date) {
     if (!DATE_CACHE[date]) {
-      DATE_CACHE[date] = this.hass.callApi('GET', 'logbook/' + date).then(
-        function (logbookEntries) {
+      DATE_CACHE[date] = this.hass.callApi("GET", "logbook/" + date).then(
+        function(logbookEntries) {
           logbookEntries.reverse();
           return logbookEntries;
         },
-        function () {
+        function() {
           DATE_CACHE[date] = false;
           return null;
         }
@@ -71,4 +73,4 @@ class HaLogbookData extends PolymerElement {
   }
 }
 
-customElements.define('ha-logbook-data', HaLogbookData);
+customElements.define("ha-logbook-data", HaLogbookData);

@@ -1,12 +1,11 @@
-import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
-import '@polymer/iron-icon/iron-icon.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import "@polymer/iron-flex-layout/iron-flex-layout-classes.js";
+import "@polymer/iron-icon/iron-icon.js";
+import { html } from "@polymer/polymer/lib/utils/html-tag.js";
+import { PolymerElement } from "@polymer/polymer/polymer-element.js";
 
-
-import formatTime from '../../common/datetime/format_time.js';
-import EventsMixin from '../../mixins/events-mixin.js';
-import domainIcon from '../../common/entity/domain_icon.js';
+import formatTime from "../../common/datetime/format_time.js";
+import EventsMixin from "../../mixins/events-mixin.js";
+import domainIcon from "../../common/entity/domain_icon.js";
 
 /*
  * @appliesMixin EventsMixin
@@ -91,8 +90,8 @@ class HaLogbook extends EventsMixin(PolymerElement) {
 
   entityClicked(ev) {
     ev.preventDefault();
-    this.fire('hass-more-info', { entityId: ev.model.item.entity_id });
+    this.fire("hass-more-info", { entityId: ev.model.item.entity_id });
   }
 }
 
-customElements.define('ha-logbook', HaLogbook);
+customElements.define("ha-logbook", HaLogbook);
