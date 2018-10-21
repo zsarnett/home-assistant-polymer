@@ -24,6 +24,8 @@ import "../../components/ha-icon.js";
 import { loadModule, loadCSS, loadJS } from "../../common/dom/load_resource.js";
 import { subscribeNotifications } from "../../data/ws-notifications";
 import "./components/notifications/hui-notification-drawer.js";
+import "./components/hui-add-card-drawer";
+import "./components/hui-add-card-config-modal";
 import "./components/notifications/hui-notifications-button.js";
 import "./hui-unused-entities.js";
 import "./hui-view.js";
@@ -35,6 +37,133 @@ import computeNotifications from "./common/compute-notifications";
 // CSS and JS should only be imported once. Modules and HTML are safe.
 const CSS_CACHE = {};
 const JS_CACHE = {};
+
+const CardTypes = [
+  {
+    name: "Alarm Panel",
+    description:
+      "The Alarm Panel allows you to Arm and Disarm your Alarm Control Panel Components.",
+    config: [
+      {
+        name: "title",
+        displayName: "Title",
+        type: String,
+      },
+      {
+        name: "entity",
+        displayName: "Entity",
+        type: String,
+      },
+    ],
+  },
+  {
+    name: "Entities",
+    description:
+      "Entities will be the most common type of card that will also be the most familiar to people using the standard interface. It groups items together very close to how groups used to do.",
+    config: [
+      {
+        name: "title",
+        displayName: "Title",
+        type: String,
+      },
+      {
+        name: "entities",
+        displayName: "Entities",
+        type: Array,
+        singularName: "Entity",
+      },
+      {
+        name: "show_header_toggle",
+        displayName: "Show Header Toggle?",
+        type: Boolean,
+      },
+    ],
+  },
+  {
+    name: "Glance",
+    description:
+      "Glance cards are very compact. Very useful to group together multiple sensors for a quick and easy overview.",
+    config: [
+      {
+        name: "title",
+        displayName: "Title",
+        type: String,
+      },
+      {
+        name: "theme",
+        displayName: "Theme",
+        type: String,
+      },
+      {
+        name: "entities",
+        displayName: "Entities",
+        type: Array,
+        singularName: "Entity",
+      },
+      {
+        name: "show_name",
+        displayName: "Show Name?",
+        type: Boolean,
+      },
+      {
+        name: "show_state",
+        displayName: "Show State?",
+        type: Boolean,
+      },
+    ],
+  },
+];
+
+const CARD_TYPES = [
+  {
+    name: "Alarm Panel",
+    config: [
+      {
+        name: "title",
+        type: String,
+      },
+      {
+        name: "entity",
+        type: String,
+      },
+    ],
+  },
+  {
+    name: "Entities",
+    config: [
+      {
+        name: "title",
+        type: String,
+      },
+      {
+        name: "entities",
+        type: Array,
+      },
+      {
+        name: "show_header_toggle",
+        type: Boolean,
+      },
+    ],
+  },
+  "Conditional",
+  "Entities",
+  "Entity Button",
+  "Entity Filter",
+  "Gauge",
+  "Glance",
+  "History Graph",
+  "Iframe",
+  "Map",
+  "Markdown",
+  "Media Control",
+  "Picture",
+  "Picture Elements",
+  "Picture Entity",
+  "Picture Glance",
+  "Plant Status",
+  "Sensor",
+  "Weather Forcast",
+];
 
 class HUIRoot extends NavigateMixin(EventsMixin(PolymerElement)) {
   static get template() {
@@ -82,6 +211,17 @@ class HUIRoot extends NavigateMixin(EventsMixin(PolymerElement)) {
       open="{{notificationsOpen}}"
       narrow="[[narrow]]"
     ></hui-notification-drawer>
+    <hui-add-card-drawer
+      hass="[[hass]]"
+      cards="[[_cards]]"
+      configOpen="{{addCardConfigOpen}}"
+      open="{{addCardOpen}}"
+      narrow="[[narrow]]"
+    ></hui-add-card-drawer>
+    <hui-add-card-config-drawer
+      open="{{addCardConfigOpen}}"
+      narrow="[[narrow]]"
+    ></hui-add-card-config-drawer>
     <ha-app-layout id="layout">
       <app-header slot="header" effects="waterfall" fixed condenses>
         <app-toolbar>
@@ -102,6 +242,7 @@ class HUIRoot extends NavigateMixin(EventsMixin(PolymerElement)) {
             <paper-listbox on-iron-select="_deselect" slot="dropdown-content">
               <paper-item on-click="_handleRefresh">Refresh</paper-item>
               <paper-item on-click="_handleUnusedEntities">Unused entities</paper-item>
+              <paper-item on-click="_handleAddCard">Add a Card</paper-item>
               <paper-item on-click="_handleHelp">Help</paper-item>
             </paper-listbox>
           </paper-menu-button>
@@ -168,6 +309,21 @@ class HUIRoot extends NavigateMixin(EventsMixin(PolymerElement)) {
       _notifications: {
         type: Array,
         computed: "_updateNotifications(hass.states, _persistentNotifications)",
+      },
+
+      addCardOpen: {
+        type: Boolean,
+        value: false,
+      },
+
+      _cards: {
+        type: Object,
+        value: CardTypes,
+      },
+
+      configOpen: {
+        type: Boolean,
+        value: false,
       },
 
       routeData: Object,
@@ -253,6 +409,10 @@ class HUIRoot extends NavigateMixin(EventsMixin(PolymerElement)) {
 
   _handleHelp() {
     window.open("https://www.home-assistant.io/lovelace/", "_blank");
+  }
+
+  _handleAddCard() {
+    this.addCardOpen = true;
   }
 
   _handleViewSelected(ev) {
