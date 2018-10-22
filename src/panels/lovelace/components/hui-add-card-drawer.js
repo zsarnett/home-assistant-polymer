@@ -85,7 +85,6 @@ export class HuiAddCardDrawer extends EventsMixin(
       .cards {
         overflow-y: auto;
         padding-top: 16px;
-        columns: 2;
       }
 
       .card {
@@ -93,7 +92,6 @@ export class HuiAddCardDrawer extends EventsMixin(
         margin: 10px;
         text-align: center;
         cursor: pointer;
-        display: inline-table;
       }
       .card span {
         font-family: var(--paper-font-headline_-_font-family);

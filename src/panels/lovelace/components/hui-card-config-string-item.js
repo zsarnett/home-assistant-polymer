@@ -11,7 +11,7 @@ export class HuiCardConfigStringItem extends PolymerElement {
   static get template() {
     return html`
     <template is="dom-if" if="[[_isEntity(item.name)]]">
-      <paper-dropdown-menu label="[[item.name]]">
+      <paper-dropdown-menu label="[[item.displayName]]">
         <paper-listbox slot="dropdown-content">
           <template is="dom-repeat" items="{{_toArray(hass.states)}}">
             <paper-item label="[[item.name]]">[[item.name]]</paper-item>

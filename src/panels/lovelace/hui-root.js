@@ -112,6 +112,44 @@ const CardTypes = [
       },
     ],
   },
+  {
+    name: "Gauge",
+    description:
+      "Gauge card is a basic card that allows visually seeing sensor data.",
+    config: [
+      {
+        name: "title",
+        displayName: "Title",
+        type: String,
+      },
+      {
+        name: "entity",
+        displayName: "Entity",
+        type: String,
+      },
+      {
+        name: "unit_of_measurement",
+        displayName: "Unit of Measurement",
+        type: String,
+      },
+      {
+        name: "min",
+        displayName: "Min",
+        type: String,
+      },
+      {
+        name: "max",
+        displayName: "Max",
+        type: String,
+      },
+      {
+        name: "severity",
+        displayName: "Severity",
+        type: Map,
+        options: ["green", "yellow", "red"],
+      },
+    ],
+  },
 ];
 
 const CARD_TYPES = [
